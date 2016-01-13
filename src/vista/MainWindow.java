@@ -1,0 +1,546 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * No padrão MVC - Model-View-Controler, A vista (view) conhece o modelo, para 
+ * poder representar a informação. (Cada um conhece o que está a sua esquerda.
+Assim:
+Model: (é independente da plataforma)
+    - não conhece ninguém, são as classes dos objectos a tratar;
+    - possui getters e setters para os campos dos objectos;
+    - poderá ter definidas algumas regras de validação dos atributos
+
+View: (depende da plataforma)
+    - Recebe os dados do modelo a representar por parametros... ;
+    - Contem as classes que interagem com o utilizador;
+    - Converte as messagens do utilizador para o controlador - controler(?);
+
+Controler:
+    - Recebe modelo e vista por parametro e instancia objectos destes...
+    - Implementa métodos, para actualizar os getters e setters do modelo;
+    - Conhece a vista, para captar as acções do utilizador;
+    - implementa as actualizações da vista;
+    - Conhece o modelo, para aplicar as regras do negocio;
+    - O controlador é tipicamente uma Singleton!
+    - Guarda os dados em memoria, assim como controla a persistência dos mesmos
+
+MAIN: ( main window - pertence a VIEW)
+    - Obtem os dados do disco
+    - cria as vistas;
+    - cria o controler;
+    - actaliza as vistas atraves do controlador;
+    - actualiza dados do modelo atraves do controlador;
+
+
+*/
+
+package vista;
+
+import controler.ApplicationData;
+import controler.AccessPassword;
+import debug.D;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+//import java.awt.event.ActionEvent;
+//import java.awt.event.ActionListener;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+//import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+//import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import model.Password;
+
+/**
+ *
+ * @author tony
+ */
+public class MainWindow extends javax.swing.JFrame implements ListSelectionListener, MouseListener, KeyListener {
+    
+    private DefaultListModel modelList;
+    private final ApplicationData appData;
+    private ListSelectionListener listListener;
+    private boolean select;
+    
+    /**
+     * Creates new form MainWindow
+     */
+    public MainWindow() {
+        initComponents();
+        // get THE instance of ApplicationData
+        appData = ApplicationData.getAppData();
+        appData.readPassData();
+        updatePasswordsList();
+        jListMainWindow.addListSelectionListener(this);
+        jPanelBase.addMouseListener(this);
+
+        btnVer.setEnabled(false);
+        btnNovo.setEnabled(true);
+        btnClonar.setEnabled(false);
+        btnEditar.setEnabled(false);
+        btnApagar.setEnabled(false);
+        btnAdmin.setEnabled(true);
+        
+        jtxtBusca.addKeyListener(this);
+        
+       /* 
+        KeyListener kl = new KeyListener(){
+            @Override
+            public void keyTyped(KeyEvent e) {
+                D.deb("Escrita a tecla: "+e.getKeyText(e.getKeyCode()));
+            }
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+                D.deb("Pressionada a tecla: "+e.getKeyText(e.getKeyCode()));
+            }
+            @Override
+            public void keyReleased(KeyEvent e) {
+                D.deb("Libertada a tecla: "+e.getKeyText(e.getKeyCode()));
+            }
+                };
+        jtxtBusca.addKeyListener(kl);
+        */
+                         
+        
+    }
+    
+    private void updatePasswordsList() {
+        modelList = new DefaultListModel();
+        int selec = 0;
+        String busca = jtxtBusca.getText();  
+        D.deb("Busca: "+busca);
+            for(Password p: appData.getPasswords()){                   
+                if (p.getTitle().contains(busca)){
+                        modelList.addElement(p);
+                        selec++;
+                }                
+                /*
+                if (busca.equalsIgnoreCase("")){
+                    modelList.addElement(p);
+                }else{
+                    if (p.getTitle().contains(busca)){
+                        modelList.addElement(p);
+                        selec++;
+                    }                                     
+                }                
+                */
+            }
+        jListMainWindow.setModel(modelList);   
+        jlblReg.setText(selec+"/"+Integer.toString(appData.getNumberPassRecords()));        
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanelBase = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jListMainWindow = new javax.swing.JList();
+        btnVer = new javax.swing.JButton();
+        btnNovo = new javax.swing.JButton();
+        btnClonar = new javax.swing.JButton();
+        btnApagar = new javax.swing.JButton();
+        btnSair = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
+        btnAdmin = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jlblReg = new javax.swing.JLabel();
+        jtxtBusca = new javax.swing.JTextField();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("CYPH V1.09");
+        setMinimumSize(new java.awt.Dimension(320, 410));
+
+        jPanelBase.setMinimumSize(new java.awt.Dimension(275, 379));
+        jPanelBase.setName(""); // NOI18N
+
+        jListMainWindow.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jListMainWindow.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane1.setViewportView(jListMainWindow);
+
+        btnVer.setText("Ver");
+        btnVer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerActionPerformed(evt);
+            }
+        });
+
+        btnNovo.setText("Novo");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
+            }
+        });
+
+        btnClonar.setText("Clonar");
+        btnClonar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClonarActionPerformed(evt);
+            }
+        });
+
+        btnApagar.setText("Apagar");
+        btnApagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnApagarActionPerformed(evt);
+            }
+        });
+
+        btnSair.setText("Sair");
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairActionPerformed(evt);
+            }
+        });
+
+        btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
+
+        btnAdmin.setText("Admin");
+        btnAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdminActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Registos:");
+
+        jlblReg.setText("123");
+
+        javax.swing.GroupLayout jPanelBaseLayout = new javax.swing.GroupLayout(jPanelBase);
+        jPanelBase.setLayout(jPanelBaseLayout);
+        jPanelBaseLayout.setHorizontalGroup(
+            jPanelBaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelBaseLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(jPanelBaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
+                    .addGroup(jPanelBaseLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jlblReg))
+                    .addComponent(jtxtBusca))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelBaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnNovo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnVer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnClonar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnApagar, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
+                    .addComponent(btnSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
+        jPanelBaseLayout.setVerticalGroup(
+            jPanelBaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelBaseLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelBaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnVer)
+                    .addComponent(jtxtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanelBaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelBaseLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelBaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jlblReg))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanelBaseLayout.createSequentialGroup()
+                        .addComponent(btnNovo)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnClonar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEditar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnApagar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAdmin)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
+                        .addComponent(btnSair)))
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanelBase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanelBase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        // TODO add your handling code here:
+        appData.savePassData();
+        appData.makeDataBCKFile();
+        appData.deleteFileRun();
+        System.exit(0);
+    }//GEN-LAST:event_btnSairActionPerformed
+
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        // TODO add your handling code here:        
+        NewPassDialog newPassWindow = new NewPassDialog (this,true,"Nova password...");
+        newPassWindow.setVisible(true);
+        appData.savePassData();
+        updatePasswordsList();
+        
+    }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void btnVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerActionPerformed
+        // TODO add your handling code here:
+        Password passSelected = (Password) jListMainWindow.getSelectedValue();
+        if (passSelected != null){
+            ViewPass viewPassWindow = new ViewPass(passSelected);        
+            viewPassWindow.setVisible(true);            
+        }else{D.deb("Nada seleccionado...");}
+
+        
+    }//GEN-LAST:event_btnVerActionPerformed
+
+    private void btnClonarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClonarActionPerformed
+        // TODO add your handling code here:
+        Password passSelected = (Password) jListMainWindow.getSelectedValue();
+        if (passSelected != null){
+            String title = passSelected.getTitle();
+            Password newPass = new Password();            
+            newPass.setTitle(passSelected.getTitle());
+            newPass.setUser(passSelected.getUser());
+            newPass.setPass(passSelected.getPass());
+            newPass.setSite(passSelected.getSite());
+            newPass.setNote(passSelected.getNote());            
+            newPass.setTitle(title+" (clone)");
+            appData.addPasswords(newPass);
+            
+        }else{D.deb("Nada seleccionado...");}        
+        updatePasswordsList();
+        itemNaoSeleccionado();
+        appData.savePassData();
+
+    }//GEN-LAST:event_btnClonarActionPerformed
+
+    private void btnApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagarActionPerformed
+        // TODO add your handling code here:
+        Password passSelected = (Password) jListMainWindow.getSelectedValue();
+        if (passSelected != null){
+            int reply = JOptionPane.showConfirmDialog(null, 
+                    "Apagar password \""+passSelected.getTitle()+"\" ?",
+                    "Apagar",
+                    JOptionPane.YES_NO_OPTION);
+                if (reply == JOptionPane.YES_OPTION){
+                    //appData.removePasswords(appData.getPasswordIndex(jListMainWindow.getSelectedIndex()));
+                    //appData.removePasswords((Password)jListMainWindow.getSelectedValue());
+                    appData.removePasswords(passSelected);
+                    //jListMainWindow.getSelectedValue();
+                }                        
+        }        
+        updatePasswordsList(); 
+        itemNaoSeleccionado();
+    }//GEN-LAST:event_btnApagarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // TODO add your handling code here:
+        Password passSelected = (Password) jListMainWindow.getSelectedValue();
+        if (passSelected != null){
+            NewPassDialog editPassWindow = new NewPassDialog(this,true,"Editar password...",
+                    passSelected, jListMainWindow.getSelectedIndex());        
+            editPassWindow.setVisible(true);            
+        }else{D.deb("Nada seleccionado...");}   
+        appData.savePassData();
+        updatePasswordsList();
+        itemNaoSeleccionado();
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
+        // TODO add your handling code here:
+        AdminCyph adm = new AdminCyph();
+        adm.setVisible(true);
+        
+    }//GEN-LAST:event_btnAdminActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        //testing access password
+
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        new AccessPassword();
+        System.gc();
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new MainWindow().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdmin;
+    private javax.swing.JButton btnApagar;
+    private javax.swing.JButton btnClonar;
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnNovo;
+    private javax.swing.JButton btnSair;
+    private javax.swing.JButton btnVer;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JList jListMainWindow;
+    private javax.swing.JPanel jPanelBase;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jlblReg;
+    private javax.swing.JTextField jtxtBusca;
+    // End of variables declaration//GEN-END:variables
+
+
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+
+        JList list = (JList) e.getSource();
+        Object item = list.getSelectedValue();
+        
+        if (item!= null){
+            itemSeleccionado();
+        }else{
+            itemNaoSeleccionado();
+        }         
+
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+        if (jPanelBase == e.getSource()){
+            itemNaoSeleccionado();
+            D.deb("mouse has been clicked in jPanel");
+            
+        }else{
+            D.deb("mouse has been clicked out of jPanel");
+            itemSeleccionado();
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        //D.deb("mouse has been Pressed");
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        //D.deb("mouse has been Released");
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        //D.deb("mouse has been Entered");
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        //D.deb("mouse has been Exited");
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    private void itemSeleccionado(){
+        btnVer.setEnabled(true);
+        btnNovo.setEnabled(true);
+        btnClonar.setEnabled(true);
+        btnEditar.setEnabled(true);
+        btnApagar.setEnabled(true);
+        btnAdmin.setEnabled(true);
+    }
+    
+    private void itemNaoSeleccionado(){
+        btnVer.setEnabled(false);
+        btnNovo.setEnabled(true);
+        btnClonar.setEnabled(false);
+        btnEditar.setEnabled(false);
+        btnApagar.setEnabled(false);
+        btnAdmin.setEnabled(true);
+
+        jListMainWindow.clearSelection();
+        
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        
+        //D.deb("Pressionada a tecla: "+e.getKeyText(e.getKeyCode()));
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        D.deb("Escrita a tecla: "+e.getKeyChar());
+        
+        updatePasswordsList(); 
+        itemNaoSeleccionado();
+      
+       // D.deb("Libertada a tecla: "+e.getKeyText(e.getKeyCode()));
+    }
+    
+    
+}

@@ -1,0 +1,60 @@
+CYPH v1.05
+
+Objectivo:
+Guardar informação sensivel, tais como passwords, ou outras informações sob a forma de texto, por forma a não serem facilmente acessíveis por terceiros.
+
+Nível de segurança:
+Aplicação utiliza um sistema de dupla encriptação, usando o algoritmo "AES" e o "DES" com chaves até 128 bits.
+
+Onde são guardados os dados:
+nos ficheiros "file1.cyph" e "file1.pwd", que deverão ser mantidos em conjunto, uma vez que se complementam. Um não é funcional sem o outro!
+
+Como aceder aos dados:
+Apenas é possivel aceder aos dados através da aplicação CYPH1.05, conhecendo a password de acesso. Essa password, tem dupla funcionalidade, permitindo acesso a aplicação, e servido de base para o processo de encriptação/desencriptação dos dados. Uma vez perdida a password de acesso, os dados são "virtualmente" irrecuperáveis. Podem pedir alguém, para recuperar, a mim é que não!!! LOL - I mean it! JÁ FOSTE!
+
+Salvaguarda dos dados:
+É possivel exportar para um ficheiro de texto, tipo txt (que abre com o notepad ou similar) os dados guardados, de todos os registos. É altamente recomendável que este ficheiro, porque é totalmente visivel, e não possui qualquer segurança, que não seja deixado no computador, ou em qualquer dispositivo que possa ser acedido por terceiros. Devrá ser copiado para uma drive externa (tipo pen usb, cartão de memória ou similar), ou impresso em papel, sendo depois guardado em cofre... OU ENTÂO NÃO EXPORTEM OS DADOS! NÃO DIGAM QUE NÃO AVISEI!
+
+INSTALAÇÃO DA APLICAÇÂO:
+Esta aplicação é multi-plataforma, o que significa que pode correr em Windows, linux e Mac OS, ou outra plataforma que possua uma JRE (Java Runtime Enviroment) de java compatível.
+
+É portanto condição necessária, possuir uma JRE instalada, de versão igual ou superior a "1.7.0.0". Para instalar a JRE, podem recorrer a seguinte hyperligação para o java 8: 
+http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html
+
+Basta criar um directorio à escolha num local onde não necessitem de privilégios de administrador para escrever (por exemplo, na pasta dos vossos documentos) e aí descompactar o ficheiro CYPH1.05.zip fornecido.
+Poderão navegar até à nova pasta CYPH1.05 criada e a sub pasta dist.
+Aí encontrarão um ficheiro cyph.jar que é a vossa aplicação.
+
+Dependendo das configurações de cada sistema, poderão abrir a mesma com duplo-clique do rato, ou executar na consola o comando:
+java -jar cyph.jar
+
+Recomendo a criação de um atalho no vosso desktop/Ambiente de Trabalho, com o comando acima indicado, para facilitar a utilização da aplicação. Poderá ser necessário indicar junto com o nome do ficheiro executável cyph.jar, o caminho para ele ou seja, os dirctorios desde a raíz. Normalmente o windows até coloca esta parte entre aspas automáticamente.
+
+Se tiverem dificuldades nesta parte, poderei ajudar, indicando-me qual a dúvida em concreto.
+
+ARRANQUE DA APLICAÇÃO CYPH:
+No primeiro arranque (ainda sem dados), é solicitado ao utilizador que indique uma password. Essa password será vital para o acesso posterior, pois uma vez esquecida, os dados serão perdidos. A password poderá ser mudada posteriormente, e quantas vezes se quizer, pela opção do botão Admin.
+
+FUNCIONAMENTO DO CYPH v1.09
+Na primeira execução, o programa pede uma password. Essa password é MASTER, e não deverá ser esquecida, pois se tal acontecer todos os dados estarão perdidos, não tem forma de recuperar... de seguida pede confirmação.
+
+Sempre que o programa arranca, pede essa password MASTER.
+
+A interface de utilizador é muito simples e funcional. Possui uma area, onde é apresentada a lista de titulos (das passwords, ou outras informações que se pretendem guardar), uma linha de texto superior, onde se pode escrever as palavras (Títulos) a pesquisar (Case sensitive), e uma coluna de botões com funcionalidades auto-explicativos...
+
+Os botões são:
+Ver: para consulta, será o botão mais utilizado no dia-a-dia! Podem ser visualizadas várias passwords simultaneamente, basta selecionar e pressionar ver.
+Novo: Para registar nova passsword;
+Clonar: Para criar uma cópia da password seleccionada (Clone), que permite depois ser editada (inclusvé mudar de nome - retirar a referencia a clone - )e assim criar uma password baseada numa anterior, com pequenas alterações nos dados.
+Editar: para editar/atualizar dados de uma password existente;
+Apagar: para eliminar uma password (para evitar de guardar muito lixo...)
+Admin: 
+	Para mudar a password MASTER.
+	Para exportar os dados para um ficheiro de texto. Esta operação deve ser evitada, pois o programa serve para evitar de guardar os dados de forma legivel, se os escrevemos num ficheiro de texto, lá se vai a segurança... A fazer-se, deverá guardar-se a lista num cofre! de um banco!
+Sair: para terminar o programa.
+
+Os dados são guardados em disco, em 2 ficheiros encriptados, file1.cyph e file1.pwd com segurança considerada elevada, ainda assim, na informática nada é definitivo... Podem copiar estes ficheiros como copia de segurança, desde que saibam qual a password que os encripta, e os mantenham sempre juntos. Só funcionam, se estiverem na directoria de trabalho defenida no sistema operativo, tipicamente, a mesma onde está o cyph.jar.
+
+O programa deverá sempre ser terminado com o botão Sair.
+
+Boas utilizações seguras.
