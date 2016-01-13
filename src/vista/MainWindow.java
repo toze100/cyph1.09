@@ -115,10 +115,10 @@ public class MainWindow extends javax.swing.JFrame implements ListSelectionListe
     private void updatePasswordsList() {
         modelList = new DefaultListModel();
         int selec = 0;
-        String busca = jtxtBusca.getText();  
+        String busca = jtxtBusca.getText().toLowerCase();  
         D.deb("Busca: "+busca);
             for(Password p: appData.getPasswords()){                   
-                if (p.getTitle().contains(busca)){
+                if (p.getTitle().toLowerCase().contains(busca)){
                         modelList.addElement(p);
                         selec++;
                 }                
