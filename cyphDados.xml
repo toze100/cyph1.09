@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Registos>
+  <Registo num="1">
+    <titulo>Novo teste de XML</titulo>
+    <user>My user from XML</user>
+    <pass>passwordlongacomoodascaldas</pass>
+    <site>www.alem.come</site>
+    <nota>Criei uma nota nova neste XML
+    Só para ver como é que isto se comporta</nota>
+  </Registo>
+</Registos>

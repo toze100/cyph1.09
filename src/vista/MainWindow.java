@@ -112,7 +112,7 @@ public class MainWindow extends javax.swing.JFrame implements ListSelectionListe
         
     }
     
-    private void updatePasswordsList() {
+    public void updatePasswordsList() {
         modelList = new DefaultListModel();
         int selec = 0;
         String busca = jtxtBusca.getText().toLowerCase();  
@@ -385,7 +385,7 @@ public class MainWindow extends javax.swing.JFrame implements ListSelectionListe
 
     private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
         // TODO add your handling code here:
-        AdminCyph adm = new AdminCyph();
+        AdminCyph adm = new AdminCyph(this);
         adm.setVisible(true);
         
     }//GEN-LAST:event_btnAdminActionPerformed

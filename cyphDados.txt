@@ -1,56 +1,70 @@
 
  #Reg. 1
-outro teste
+test
 
 
 
-
+editei com sucesso, outra vez, outra vez, masi disparates
 
  #Reg. 2
-sitio longo
+teste
+User Tester
+testerPasswordBigHexa
+www.larilole.come
+Notas várias
+Para ver como é que fica
+se tiver muitas linhas
+e bué de informação e tal
 
+mesmo com linhas em branco
 
-https://www.google.pt/?gws_rd=ssl#q=Dia+do+Pai&oi=ddle&ct=fathers-day-2015-it-es-bo-hn-6263024763535360-hp&hl=pt-PT
-
+Para ver se é tudo prseado como deve ser!
 
  #Reg. 3
-teste
+teste (clone)
 
 
 
-
+jkhguo
 
  #Reg. 4
-teste
+teste1
 
 
 
 
 
  #Reg. 5
-teste
+teste2
+sns
+sn
 
-
-
-
+b hsj y
 
  #Reg. 6
-testejhhbdsv fv
+teste3
 
 
-adfga
-hGCVCHABDKS <X
+
+avfqeb
 
  #Reg. 7
-testejhhbdsv JH
+tony1
 
 
-adfga
-hGCVCHABDKS <X
+
+1
 
  #Reg. 8
-titulo completo
-myUser ID
-abracadabra#123!!$
-www.aquiacola.pt
-Este texto é uma nota longa propositadamente para verificar que não temos quebra de linha no texto exportado para o ficheiro de texto. Isto pode ser conseguido postaeriormente, ou ser já previsto , mas agora nã me apetece estar com estas mariquices!
+tony2
+
+
+
+
+
+ #Reg. 9
+tony7
+
+
+
+

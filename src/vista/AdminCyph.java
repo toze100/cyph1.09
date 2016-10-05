@@ -7,10 +7,16 @@ package vista;
 
 import controler.AccessPassword;
 import controler.ApplicationData;
+import controler.ExportDataToXML;
+import controler.ImportDataFromXML;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
 
 import javax.swing.JOptionPane;
+import org.dom4j.DocumentException;
 //import static javax.swing.JOptionPane.QUESTION_MESSAGE;
 //import static javax.swing.JOptionPane.YES_NO_OPTION;
 
@@ -25,9 +31,11 @@ public class AdminCyph extends javax.swing.JFrame {
      */
     
     ImageIcon myIcon;
+    MainWindow mw;
     
-    public AdminCyph() {
+    public AdminCyph(MainWindow mw) {
         initComponents();
+        this.mw = mw;
         this.setLocationRelativeTo(null);        
         myIcon=new ImageIcon(this.getClass().getResource("ET-quakewars_s.png"));      
         myIconPicture.setIcon(myIcon);        
@@ -50,6 +58,8 @@ public class AdminCyph extends javax.swing.JFrame {
         btnExportTxt = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         myIconPicture = new javax.swing.JLabel();
+        btnExportarXML = new javax.swing.JButton();
+        btnImportarXML = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Administração");
@@ -115,6 +125,22 @@ public class AdminCyph extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(174, 12, 190, 180));
 
+        btnExportarXML.setText("Exportar XML");
+        btnExportarXML.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportarXMLActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnExportarXML, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 130, -1));
+
+        btnImportarXML.setText("Importar XML");
+        btnImportarXML.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImportarXMLActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnImportarXML, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 130, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -178,11 +204,52 @@ public class AdminCyph extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnExportTxtActionPerformed
 
+    private void btnExportarXMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarXMLActionPerformed
+        // TODO add your handling code here:
+                String[] options = {"Exportar!", "Cancelar"};
+        int n = JOptionPane.showOptionDialog(null, 
+                "Pretende exportar dados para ficheiro \"cyphDados.xml?\"",
+                "Exportar XML...",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[0]);
+        if (n == 0){
+                    try {
+                        ExportDataToXML exportXML = new ExportDataToXML();
+                        //ptv.setVisible(true);
+                        //ApplicationData.exportTxt(ptv);
+                    } catch (IOException ex) {
+                        //Logger.getLogger(AdminCyph.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(null, "Erro no XML parser: "+ex);
+                    }
+            
+        }else{
+            // do nothing...
+        }
+        
+    }//GEN-LAST:event_btnExportarXMLActionPerformed
+
+    private void btnImportarXMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportarXMLActionPerformed
+        try {
+            // TODO add your handling code here:
+            ImportDataFromXML importXML = new ImportDataFromXML();
+            mw.updatePasswordsList();
+            
+        } catch (IOException | DocumentException ex) {
+            Logger.getLogger(AdminCyph.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Erro no XML parser: "+ex);
+        }
+    }//GEN-LAST:event_btnImportarXMLActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAbout;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnChangePassword;
     private javax.swing.JButton btnExportTxt;
+    private javax.swing.JButton btnExportarXML;
+    private javax.swing.JButton btnImportarXML;
     private javax.swing.JButton btnOk;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
